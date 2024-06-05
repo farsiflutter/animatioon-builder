@@ -6,8 +6,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Animation Builder Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Animation Builder Example')),
+        appBar: AppBar(
+          title: Text('Animation Builder Example'),
+        ),
         body: Center(
           child: AnimationDemo(),
         ),
@@ -34,7 +40,9 @@ class _AnimationDemoState extends State<AnimationDemo>
       vsync: this,
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0, end: 300).animate(_controller);
+    _animation = Tween<double>(begin: 50, end: 300).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -51,7 +59,16 @@ class _AnimationDemoState extends State<AnimationDemo>
         return Container(
           width: _animation.value,
           height: _animation.value,
-          color: Colors.blue,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Center(
+            child: Text(
+              'Animating!',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
         );
       },
     );
